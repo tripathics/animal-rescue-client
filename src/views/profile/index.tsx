@@ -1,19 +1,15 @@
 import Header from "@/components/layouts/PageHeader/PageHeader";
 import useUser from "@/hooks/user";
 import DashboardLayout from "@/components/layouts/dashboard";
-import styles from "./Profile.module.scss";
 import { Outlet } from "react-router";
 
 import PersonalProfile from "./page";
-import Education from "./education/page";
-import Experience from "./experience/page";
 
 import {
   User as UserIcon,
   Settings as SettingsIcon,
   LogOut as LogOutIcon,
 } from "iconoir-react";
-import cx from "classnames";
 
 const Profile = () => {
   const { logout } = useUser();
@@ -51,4 +47,4 @@ const Profile = () => {
 };
 
 export default Profile;
-export { PersonalProfile, Education, Experience };
+export { PersonalProfile };

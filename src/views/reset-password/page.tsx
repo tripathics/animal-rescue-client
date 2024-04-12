@@ -238,7 +238,7 @@ const ResetPassword = () => {
       setError(null);
       setLoading(true);
       const data = await createOtpForAuth(otpFormData.email);
-      if (data.success) {
+      if (data?.success) {
         setEmail(otpFormData.email);
         setFormState("verify");
       }
