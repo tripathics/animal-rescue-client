@@ -278,6 +278,8 @@ const DonationPage: React.FC = () => {
           <DonateForm
             onSubmit={(data) => {
               console.log(data);
+              toast.success(`You donated Rs. ${data.amount}!`);
+              setDonationPost(null);
             }}
           />
         </div>

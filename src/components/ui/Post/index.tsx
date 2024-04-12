@@ -121,6 +121,8 @@ export const Post: React.FC<{
               <DonateForm
                 onSubmit={(data) => {
                   console.log(data);
+                  toast.success(`You donated Rs. ${data.amount}!`);
+                  setIsDonateModalOpen(false);
                 }}
               />
             </div>
