@@ -4,16 +4,17 @@ import { UserProvider } from "./contexts/user";
 import RootLayout from "./components/layouts/root";
 import AuthLayout from "./components/layouts/auth";
 import PrivateRoutes from "./components/routing/PrivateRoutes/PrivateRoutes";
+import Organisation from "./views/organisation/organisation";
+import OrganisationGrid from "./views/organisation/OrganisationGrid";
 import { Home, About, Login, Register } from "./views";
 import Profile, {
-  Education,
-  Experience,
+
   PersonalProfile,
 } from "./views/profile";
 import Admin, { Applications, Users } from "./views/admin";
 import Alumni from "./views/alumni";
 import ResetPassword from "./views/reset-password/page";
-
+import Organisation from "./views/organisation/page";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
         children: [
           { path: "", element: <Home /> },
           { path: "about", element: <About /> },
+          { path: "organizations", element: <Organisation /> },
           {
             element: <PrivateRoutes />,
             children: [
@@ -31,8 +33,6 @@ const router = createBrowserRouter([
                 element: <Profile />,
                 children: [
                   { path: "", element: <PersonalProfile /> },
-                  { path: "education", element: <Education /> },
-                  { path: "experience", element: <Experience /> },
                   { path: "account", element: <h1>TODO: Account</h1> },
                 ],
               },
@@ -50,6 +50,24 @@ const router = createBrowserRouter([
               },
             ],
           },
+          { 
+            children :[
+              {
+                path: "organisation", 
+                element : <Organisation />,
+                children: [
+                  { path: "list", element: <OrganisationGrid /> },
+                  { path: "add", element: <h1>TODO: Add Organisation</h1> },
+                  { path: "edit", element: <h1>TODO: Edit Organisation</h1> },
+                ]
+              }
+            ]
+          },
+          {
+            path:"orglist",
+            element: <OrganisationGrid />
+          },
+
           {
             element: <PrivateRoutes adminRoute />,
             children: [
