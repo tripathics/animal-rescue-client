@@ -8,18 +8,25 @@ import { Post, PostsContainer } from "@/components/ui/Post";
 const dummyOrganizations = [
   {
     id: 1,
-    name: "Organization 1",
+    image: "https://via.placeholder.com/150",
+    name: "sharda stray foundation",
     url: "https://example.com",
+    location: "Kathmandu, Nepal",
   },
   {
     id: 2,
-    name: "Organization 2",
+    image: "https://via.placeholder.com/150",
+    name: "Purucat House",
     url: "https://example.com",
+    location: "tamilnadu, india",
+
   },
   {
     id: 3,
-    name: "Organization 3",
+    image: "https://via.placeholder.com/150",
+    name: "Chandrashaker gau shala",
     url: "https://example.com",
+    location: "koyom batur, indonesia",
   },
 ];
 
@@ -43,12 +50,17 @@ const Home: React.FC = () => {
         <TwoColLayout
           sidebar={
             <div>
-              <h3>Find help nearby</h3>
-              <div>
+              <h3>Find help nearby </h3>
+              <div className={styles.sideOrg}>
+
                 <ul>
                   {dummyOrganizations.map((org) => (
                     <li key={org.id}>
-                      <a href={org.url}>{org.name}</a>
+                      <img src={org.image} alt={org.name} />
+                      <div>
+                        <a href={org.url}>{org.name}</a>
+                        <p>{org.location}</p>
+                      </div>
                     </li>
                   ))}
                 </ul>
@@ -67,9 +79,58 @@ const Home: React.FC = () => {
                   "https://via.placeholder.com/300",
                   "https://via.placeholder.com/500",
                 ]}
+              />  <Post
+                description="today my cat had an acccdent "
+                userName="perna"
+                pictures={[
+                  "https://via.placeholder.com/150",
+                  "https://via.placeholder.com/200",
+                  "https://via.placeholder.com/300",
+                  "https://via.placeholder.com/500",
+                ]}
+              />
+              <Post
+                description="conar killed and ate my cat"
+                userName="kabib"
+                pictures={[
+                  "https://via.placeholder.com/150",
+                  "https://via.placeholder.com/200",
+                  "https://via.placeholder.com/300",
+                  "https://via.placeholder.com/500",
+                ]}
+              />
+              <Post
+                description="hello world"
+                userName="Alice"
+                pictures={[
+                  "https://via.placeholder.com/150",
+                  "https://via.placeholder.com/200",
+                  "https://via.placeholder.com/300",
+                  "https://via.placeholder.com/500",
+                ]}
+              />  <Post
+                description="today my cat had an acccdent "
+                userName="perna"
+                pictures={[
+                  "https://via.placeholder.com/150",
+                  "https://via.placeholder.com/200",
+                  "https://via.placeholder.com/300",
+                  "https://via.placeholder.com/500",
+                ]}
+              />
+              <Post
+                description="conar killed and ate my cat"
+                userName="kabib"
+                pictures={[
+                  "https://via.placeholder.com/150",
+                  "https://via.placeholder.com/200",
+                  "https://via.placeholder.com/300",
+                  "https://via.placeholder.com/500",
+                ]}
               />
             </PostsContainer>
           </div>
+
         </TwoColLayout>
       </div>
     </>
