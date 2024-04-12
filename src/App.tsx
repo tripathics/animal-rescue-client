@@ -4,6 +4,8 @@ import { UserProvider } from "./contexts/user";
 import RootLayout from "./components/layouts/root";
 import AuthLayout from "./components/layouts/auth";
 import PrivateRoutes from "./components/routing/PrivateRoutes/PrivateRoutes";
+import Organisation from "./views/organisation/organisation";
+import OrganisationGrid from "./views/organisation/OrganisationGrid";
 import { Home, About, Login, Register } from "./views";
 import Profile, {
   Education,
@@ -42,6 +44,24 @@ const router = createBrowserRouter([
               },
             ],
           },
+          { 
+            children :[
+              {
+                path: "organisation", 
+                element : <Organisation />,
+                children: [
+                  { path: "list", element: <OrganisationGrid /> },
+                  { path: "add", element: <h1>TODO: Add Organisation</h1> },
+                  { path: "edit", element: <h1>TODO: Edit Organisation</h1> },
+                ]
+              }
+            ]
+          },
+          {
+            path:"orglist",
+            element: <OrganisationGrid />
+          },
+
           {
             element: <PrivateRoutes adminRoute />,
             children: [
