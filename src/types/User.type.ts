@@ -1,7 +1,4 @@
-export type TitleType = "mr" | "mrs" | "miss" | "dr";
 export type UserRole = "user" | "org";
-export type SexType = "male" | "female" | "others";
-export type CategoryType = "gen" | "obc" | "sc" | "st" | "ews" | "others";
 
 export interface UserType {
   id: string;
@@ -10,6 +7,13 @@ export interface UserType {
   first_name: string;
   last_name?: string | null;
   avatar: string;
+
+  address: string;
+  pincode: string;
+  state: string;
+  city: string;
+  country: string;
+  phone: string;
 }
 
 export interface UserContextType {

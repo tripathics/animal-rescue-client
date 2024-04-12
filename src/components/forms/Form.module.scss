@@ -134,15 +134,19 @@
       flex-direction: row;
 
       input.radio {
-        width: 1.2rem;
-        height: 1.2rem;
+        width: 1.4rem;
+        height: 1.4rem;
       }
 
       label.radio-label {
         font-family: "Roboto", sans-serif;
         font-size: 1rem;
-        line-height: 1.2;
+        line-height: 0;
         margin-left: 0.5rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
       }
     }
   }

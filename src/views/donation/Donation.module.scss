@@ -1,54 +1,70 @@
+.card {
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: var(--box-bs);
+  background-color: white;
+  gap: 1rem;
+  position: relative;
 
-.card 
-{
-    margin-top: 2rem;
-    width: 250px;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 300px;
-    flex-grow: 1;
-    gap:10px;
+  .content {
+    padding: 1rem 1rem 3rem;
+    p {
+      font-size: 0.85rem;
+      margin: 0.5rem 0;
+    }
+
+    h3 {
+      font-size: 1rem;
+      margin: 0;
+    }
+  }
 }
 
-.imgBox 
-{
-    width: 100%;
-    height: 100px;
-    display: flex;
-    justify-content: center; 
-    background-color: #A0B4B7;
+.imgBox {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  background-color: #a0b4b7;
 }
 
-.btn 
-{   
-    border:2px solid #0A66C2;
-    border-radius: 10px;
-    display: flex;
-    gap:10px;
-    justify-content: center;
-    align-items: center;
-    padding:5px;
-    cursor: pointer;
-    color: #0A66C2;
+.btn {
+  width: 100%;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  --border-color: transparent;
+  --bg-color: transparent;
+  --active-bg-color: var(--gray-4);
+  --active-border-color: var(--gray-6);
+  --color: black;
+  font-weight: 500;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+
+  svg {
+    color: inherit;
+    stroke: currentColor;
+  }
 }
-.content 
-{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+.grid-box {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
 }
-.grid-box 
-{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
+
+.donateModal {
+  background-color: white;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
-.donationForm 
-{
-    background-color: white;
-    padding: 0.5rem;
+.donationForm {
+  background-color: white;
+  padding: 1.5rem 2rem;
 }

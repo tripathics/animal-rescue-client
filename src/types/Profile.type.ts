@@ -11,4 +11,8 @@ export interface PersonalDetailsType {
   country: string;
   phone: string;
   avatar: string | null;
+  location?: {
+    lat: number;
+    lng: number;
+  };
 }

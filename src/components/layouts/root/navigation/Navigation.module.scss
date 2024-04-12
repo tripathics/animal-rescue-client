@@ -13,15 +13,16 @@
 
   .logo {
     padding: 2px 0;
-    img {
+
+    a {
       height: 64px;
-      width: auto;
+      display: flex;
+      align-items: center;
     }
 
-    @media screen and (max-width: 768px) {
-      img {
-        height: 32px;
-      }
+    img {
+      height: 56px;
+      width: auto;
     }
   }
 

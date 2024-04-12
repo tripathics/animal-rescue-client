@@ -4,15 +4,14 @@ import { UserProvider } from "./contexts/user";
 import RootLayout from "./components/layouts/root";
 import AuthLayout from "./components/layouts/auth";
 import PrivateRoutes from "./components/routing/PrivateRoutes/PrivateRoutes";
-// import Organisation from "./views/organisation/organisation";
 import OrganisationGrid from "./views/organisation/OrganisationGrid";
 import { Home, About, Login, Register } from "./views";
 import DonationPage from "./views/donation/Page";
 import Profile, { PersonalProfile } from "./views/profile";
-import Admin, { Applications, Users } from "./views/admin";
-import Alumni from "./views/alumni";
+import Rescue from "./views/rescue";
 import ResetPassword from "./views/reset-password/page";
-import Organisation from "./views/organisation/page";
+import Organisations from "./views/organisation/page";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,7 +21,7 @@ const router = createBrowserRouter([
         children: [
           { path: "", element: <Home /> },
           { path: "about", element: <About /> },
-          { path: "organizations", element: <Organisation /> },
+          { path: "organizations", element: <Organisations /> },
           {
             element: <PrivateRoutes />,
             children: [
@@ -36,49 +35,26 @@ const router = createBrowserRouter([
               },
               {
                 path: "rescue",
-                element: <h1>TODO: Rescue</h1>,
+                element: <Rescue />,
               },
               {
                 path: "donate",
                 element: <DonationPage />,
               },
-              {
-                path: "alumni-membership",
-                element: <Alumni />,
-              },
             ],
           },
           {
+            element: <PrivateRoutes orgRoute />,
             children: [
               {
-                path: "organisation",
-                element: <Organisation />,
-                children: [
-                  { path: "list", element: <OrganisationGrid /> },
-                  { path: "add", element: <h1>TODO: Add Organisation</h1> },
-                  { path: "edit", element: <h1>TODO: Edit Organisation</h1> },
-                ],
+                path: "rescue-requests",
+                element: <p>Todo: RescueRequests</p>,
               },
             ],
           },
           {
             path: "orglist",
             element: <OrganisationGrid />,
-          },
-
-          {
-            element: <PrivateRoutes adminRoute />,
-            children: [
-              {
-                path: "admin",
-                element: <Admin />,
-                children: [
-                  { path: "", element: <h1>TODO: Dashboard</h1> },
-                  { path: "applications", element: <Applications /> },
-                  { path: "users", element: <Users /> },
-                ],
-              },
-            ],
           },
           { path: "*", element: <h1>Not Found</h1> },
         ],

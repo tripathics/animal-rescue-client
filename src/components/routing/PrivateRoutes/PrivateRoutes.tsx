@@ -1,7 +1,7 @@
 import useUser from "@/hooks/user";
 import { Navigate, Outlet, useLocation } from "react-router";
 
-const ProtectedRoutes = ({ adminRoute = false }) => {
+const ProtectedRoutes = ({ orgRoute = false }) => {
   const { user, admin, loading } = useUser();
 
   const location = useLocation();
@@ -10,7 +10,7 @@ const ProtectedRoutes = ({ adminRoute = false }) => {
     <div>Loading...</div>
   ) : !user ? (
     <Navigate to="/login" state={{ from: location.pathname }} />
-  ) : !admin && adminRoute ? (
+  ) : !admin && orgRoute ? (
     <div>Forbidden</div>
   ) : (
     <Outlet />

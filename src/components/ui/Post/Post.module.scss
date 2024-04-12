@@ -1,14 +1,10 @@
 .postsContainer {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 2rem;
+  grid-template-columns: 200px 1fr;
+  gap: 1rem 2rem;
 
-  .sidebar {
-    grid-column: span 3 / span 3;
-  }
-
-  .posts {
-    grid-column: span 9 / span 9;
+  @media screen and (max-width: 1080px) {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -26,9 +22,30 @@
     align-items: center;
     gap: 0.5rem;
 
-    .userName {
-      font-size: 1rem;
-      font-weight: 600;
+    .meta {
+      flex-grow: 1;
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+    }
+
+    .textContent {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      .userName {
+        font-size: 1rem;
+        font-weight: 550;
+        color: black;
+      }
+
+      .timeStamp {
+        font-size: 0.75rem;
+        line-height: 1;
+        font-weight: 700;
+        color: var(--text-muted);
+      }
     }
   }
 
@@ -70,6 +87,25 @@
       }
     }
   }
+
+  .footer {
+    display: flex;
+    margin-top: 1rem;
+
+    .donateBtn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 0.25rem;
+
+      font-weight: 600;
+    }
+  }
+}
+
+.donateModal {
+  background-color: white;
+  padding: 1rem 2rem 2rem;
 }
 
 .rescue {

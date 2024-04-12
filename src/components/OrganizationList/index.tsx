@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import PageHeader from "../../components/layouts/PageHeader/PageHeader";
-import styles from "./organisation.module.scss";
-import cx from "classnames";
-import getOrganizations from "@/utils/api/getOrganizations";
+import React, { useEffect, useState } from "react";
+import styles from "./OrganizationList.module.scss";
 import { toast } from "react-toastify";
+import getOrganizations from "@/utils/api/getOrganizations";
+import Avatar from "../ui/Avatar/Avatar";
+
+// dummy list of organizations that rescue animals
 
 const dummyOrganizations = [
   {
@@ -74,38 +75,7 @@ const dummyOrganizations = [
   },
 ];
 
-const Organization: React.FC<{
-  id: string;
-  avatar: string;
-  first_name: string;
-  country: string;
-  state: string;
-  address: string;
-}> = (org) => {
-  return (
-    <li className={styles.org} key={org.id}>
-      <img
-        src={
-          org.avatar.startsWith("http")
-            ? org.avatar
-            : `${import.meta.env.VITE_SERVER_BASE_URL}/media/avatars/${
-                org.avatar
-              }`
-        }
-        alt={org.first_name}
-      />
-      <div>
-        <h2>{org.first_name}</h2>
-        <h3>
-          {org.state}, {org.country}
-        </h3>
-        <p>{org.address}</p>
-      </div>
-    </li>
-  );
-};
-
-const Organisations: React.FC = () => {
+const OrganizationList = () => {
   const [organizations, setOrganizations] = useState<
     {
       id: string;
@@ -122,7 +92,9 @@ const Organisations: React.FC = () => {
       try {
         const data = await getOrganizations();
         if (data?.organizations) {
-          setOrganizations([...data.organizations, ...dummyOrganizations]);
+          setOrganizations(
+            [...data.organizations, ...dummyOrganizations].slice(0, 5)
+          );
         }
       } catch (error) {
         if (error instanceof Error) toast.error(error.message);
@@ -133,34 +105,33 @@ const Organisations: React.FC = () => {
   }, []);
 
   return (
-    <>
-      <PageHeader bgImage="hero.jpeg">
-        <div className={cx(styles.header)}>
-          <div className={styles["header-content"]}>
-            <h1 className={styles.heading}>Not Every Hero wears A CAPE</h1>
-            <p>
-              The organizations that are working to make the world a better
-              place for animals.
-            </p>
-          </div>
-        </div>
-      </PageHeader>
-
-      <div className="__page-content container">
-        <div className={styles.Orgcontainer}>
-          <h2>Organizations</h2>
-          <hr />
-          <div className={styles.Orgshow}>
-            <ul>
-              {organizations.map((org) => (
-                <Organization key={org.id} {...org} />
-              ))}
-            </ul>
-          </div>
-        </div>
+    <div className={styles.orgList}>
+      <h3 className={styles.title}>Find help nearby </h3>
+      <hr />
+      <div className={styles.sideOrg}>
+        <ul>
+          {organizations.map((org, i) => (
+            <React.Fragment key={org.id}>
+              <li>
+                {org.avatar?.startsWith("http") ? (
+                  <img src={org.avatar} alt="avatar" />
+                ) : (
+                  <Avatar size="50px" avatar={org.avatar} />
+                )}
+                <div>
+                  <a href={"#"}>{org.first_name}</a>
+                  <p>
+                    {org.state}, {org.country}
+                  </p>
+                </div>
+              </li>
+              {i !== organizations.length - 1 && <hr />}
+            </React.Fragment>
+          ))}
+        </ul>
       </div>
-    </>
+    </div>
   );
 };
 
-export default Organisations;
+export default OrganizationList;

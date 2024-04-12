@@ -55,6 +55,13 @@ const PersonalDetails = () => {
   const [personalDetails, setPersonalDetails] = useState<PersonalDetailsType>();
 
   const updateProfile = async (data: FieldValues) => {
+    if (!user?.first_name && user?.role.includes("org")) {
+      if (!location) {
+        return toast.error("Location is required for organization profile");
+      }
+      data.location_lat = location.location_lat;
+      data.location_lng = location.location_lng;
+    }
     try {
       const response = await updateProfileApi(data as PersonalDetailsType);
       if (response?.success) {
@@ -104,6 +111,33 @@ const PersonalDetails = () => {
       fetchUser();
     };
   }, [fetchProfile, fetchUser]);
+
+  const [location, setLocation] = useState<{
+    location_lat: number;
+    location_lng: number;
+  } | null>(null);
+
+  useEffect(() => {
+    if (user?.role.includes("org")) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const location = {
+              location_lat: position.coords.latitude,
+              location_lng: position.coords.longitude,
+            };
+            // You can set location to state or send it to server
+            setLocation(location);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      } else {
+        console.log("Geolocation is not supported by this browser.");
+      }
+    }
+  }, [user]);
 
   return personalDetails?.first_name ? (
     <>
@@ -223,6 +257,17 @@ const PersonalDetails = () => {
             ? "Enter your organization details"
             : "Complete your profile")}
       </Alert>
+      {user?.role.includes("org") && !location && (
+        <Alert severity="warning">
+          Location access is required to create an organization profile
+        </Alert>
+      )}
+
+      {user?.role.includes("org") && location && (
+        <Alert>
+          Your location is: {location.location_lat}, {location.location_lng}
+        </Alert>
+      )}
       <section className={styles.box}>
         <PersonalDetailsForm
           prefillData={

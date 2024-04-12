@@ -28,6 +28,11 @@ const Navbar: React.FC = () => {
     { label: "Register", href: "/register" },
     { label: "Profile", href: "/profile", rolesVislbleTo: ["user", "org"] },
     {
+      label: "Rescue requests",
+      href: "/rescue-requests",
+      rolesVislbleTo: ["org"],
+    },
+    {
       label: "Logout",
       href: "/",
       action: logout,

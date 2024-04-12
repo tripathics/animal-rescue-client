@@ -1,7 +1,14 @@
 import { useState } from "react";
 import styles from "./Post.module.scss";
 import Avatar from "../Avatar/Avatar";
-import { ArrowLeft, ArrowRight, Heart, Plus } from "iconoir-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Donate,
+  Post as PostIcon,
+  Heart,
+  Plus,
+} from "iconoir-react";
 import Button from "../Elements/Button";
 import useUser from "@/hooks/user";
 import Modal from "../Modal/Modal";
@@ -11,6 +18,8 @@ import { FieldValues } from "react-hook-form";
 import createPost from "@/utils/api/createPost";
 import { toast } from "react-toastify";
 import eventEmitter from "@/config/eventEmitter.config";
+import { getDateWithTime } from "@/utils/helper";
+import { DonateForm } from "@/views/donation/Page";
 
 export const PictureCarousel: React.FC<{ pictures: string[] }> = ({
   pictures,
@@ -60,19 +69,64 @@ export const PictureCarousel: React.FC<{ pictures: string[] }> = ({
 export const Post: React.FC<{
   userName: string;
   description: string;
+  created_at: string;
+  post_type: "post" | "donation";
   userAvatar?: string | null;
   pictures?: string[];
-}> = ({ userName, description, pictures, userAvatar }) => {
+}> = ({
+  userName,
+  description,
+  pictures,
+  userAvatar,
+  created_at,
+  post_type,
+}) => {
+  const [isDonateModalOpen, setIsDonateModalOpen] = useState(false);
+
   return (
     <div className={styles.post}>
       <header className={styles.header}>
         <Avatar size="2.2rem" avatar={userAvatar} />
-        <p className={styles.userName}>{userName}</p>
+        <div className={styles.meta}>
+          <div className={styles.textContent}>
+            <p className={styles.userName}>{userName}</p>
+            <time className={styles.timeStamp}>
+              {getDateWithTime(created_at)}
+            </time>
+          </div>
+          {post_type === "donation" ? <Donate /> : <PostIcon />}
+        </div>
       </header>
       <main className={styles.main}>
         <p className={styles.description}>{description}</p>
         {!!pictures?.length && <PictureCarousel pictures={pictures} />}
       </main>
+      {post_type === "donation" && (
+        <>
+          <footer className={styles.footer}>
+            <Button
+              onClick={() => setIsDonateModalOpen(true)}
+              className={styles.donateBtn}
+            >
+              <Donate />
+              Donate
+            </Button>
+          </footer>
+          <Modal
+            modalTitle="Donate"
+            isOpen={isDonateModalOpen}
+            setIsOpen={setIsDonateModalOpen}
+          >
+            <div className={styles.donateModal}>
+              <DonateForm
+                onSubmit={(data) => {
+                  console.log(data);
+                }}
+              />
+            </div>
+          </Modal>
+        </>
+      )}
     </div>
   );
 };
@@ -132,20 +186,20 @@ export const CreatePost: React.FC = () => {
             <SchemaForm
               schema={[
                 {
-                  name: "description",
-                  type: "textarea",
-                  required: "Description is required",
-                  label: "Write your post",
-                },
-                {
                   name: "post_type",
                   type: "radio",
                   required: "Post type is required",
                   label: "Select post type",
                   options: [
-                    { label: "post", value: "post" },
-                    { label: "donation", value: "donation" },
+                    { label: "Post", value: "post" },
+                    { label: "Seeking donation", value: "donation" },
                   ],
+                },
+                {
+                  name: "description",
+                  type: "textarea",
+                  required: "Description is required",
+                  label: "Write your post",
                 },
                 {
                   name: "pictures",
