@@ -7,6 +7,7 @@ import PrivateRoutes from "./components/routing/PrivateRoutes/PrivateRoutes";
 import Organisation from "./views/organisation/organisation";
 import OrganisationGrid from "./views/organisation/OrganisationGrid";
 import { Home, About, Login, Register } from "./views";
+import DonationPage from "./views/donation/Page";
 import Profile, {
   Education,
   Experience,
@@ -44,7 +45,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "donate",
-                element: <h1>TODO: Donate</h1>,
+                element: <DonationPage />,
               },
               {
                 path: "alumni-membership",
