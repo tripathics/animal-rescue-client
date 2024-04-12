@@ -37,10 +37,6 @@ const OTPForm: React.FC<{
         label="Registered email"
         {...register("email", {
           required: "Email is required",
-          pattern: {
-            value: /^(?!.*@nitap\.ac\.in).*$/,
-            message: "Invalid email or @nitap.ac.in domain is not allowed",
-          },
         })}
         Icon={MailIcon}
         value={watch("email")}

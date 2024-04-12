@@ -6,35 +6,33 @@ import useUser from "@/hooks/user";
 import NavLi, { NavLiProps } from "./NavLi";
 import Dropdown from "@/components/ui/Dropdown/Dropdown";
 import Avatar from "@/components/ui/Avatar/Avatar";
+import { UserRole } from "@/types/User.type";
 
 const Navbar: React.FC = () => {
   const { loading, user, logout } = useUser();
 
   const links = [
     { label: "Home", href: "/" },
+    { label: "Organizations", href: "/organizations" },
+    { label: "Rescue", href: "/rescue" },
+    { label: "Donate", href: "/donate" },
     { label: "About", href: "/about" },
   ];
 
   interface userLinksType extends NavLiProps {
     noAuth?: boolean;
-    rolesVislbleTo?: ("user" | "admin" | "alumni")[];
+    rolesVislbleTo?: UserRole[];
   }
   const userLinks: userLinksType[] = [
     { label: "Login", href: "/login" },
     { label: "Register", href: "/register" },
-    { label: "Profile", href: "/profile", rolesVislbleTo: ["user", "alumni"] },
-    {
-      label: "Alumni Membership",
-      href: "/alumni-membership",
-      rolesVislbleTo: ["user", "alumni"],
-    },
-    { label: "Admin", href: "/admin", rolesVislbleTo: ["admin"] },
+    { label: "Profile", href: "/profile", rolesVislbleTo: ["user"] },
     {
       label: "Logout",
       href: "/",
       action: logout,
       type: "button",
-      rolesVislbleTo: ["user", "admin"],
+      rolesVislbleTo: ["user", "org"],
     },
   ];
 
@@ -43,7 +41,7 @@ const Navbar: React.FC = () => {
       <div className={cx(styles["nav-container"], "container")}>
         <div className={styles.logo}>
           <NavLink to="/">
-            <img src="/navbar-banner.svg" alt="NIT AP Alumni" height={40} />
+            <img src="/navbar-banner.svg" alt="NIT AP Alumni" height={80} />
           </NavLink>
         </div>
         <div className={styles["nav-content"]}>
@@ -113,7 +111,7 @@ const Navbar: React.FC = () => {
                         <div className={styles["user-name-wrapper"]}>
                           {user.first_name ? (
                             <div className={styles["user-name"]}>
-                              {`${user.title} ${user.first_name} ${user.last_name}`}
+                              {`${user.first_name} ${user.last_name}`}
                             </div>
                           ) : (
                             <div className={styles["message"]}>

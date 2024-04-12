@@ -1,4 +1,5 @@
-import { Button, TextField } from "@/components/forms";
+import { TextField } from "@/components/forms";
+import Button from "@/components/ui/Elements/Button";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
@@ -32,7 +33,7 @@ const OTPForm: React.FC<{
       <TextField
         type="text"
         required
-        label="Personal Email"
+        label="Email"
         {...register("email", {
           required: "Email is required",
         })}
@@ -41,7 +42,12 @@ const OTPForm: React.FC<{
         error={errors["email"]}
       />
       <div className={styles["actions"]}>
-        <Button disabled={loading} type="submit" className="btn primary">
+        <Button
+          disabled={loading}
+          variant="primary"
+          type="submit"
+          className={styles.btn}
+        >
           Send OTP
         </Button>
       </div>
@@ -75,7 +81,7 @@ const VerifyForm: React.FC<{
         type="text"
         required
         disabled
-        label="Personal Email"
+        label="Email"
         {...register("email", {
           required: "Email is required",
         })}
@@ -99,7 +105,12 @@ const VerifyForm: React.FC<{
         error={errors["otp"]}
       />
       <div className={styles["actions"]}>
-        <Button disabled={loading} type="submit" className="btn primary">
+        <Button
+          disabled={loading}
+          type="submit"
+          variant="primary"
+          className={styles.btn}
+        >
           Verify
         </Button>
       </div>
@@ -130,7 +141,7 @@ const SignupForm: React.FC<{
         type="text"
         required
         disabled
-        label="Personal Email"
+        label="Email"
         {...register("email", {
           required: "Email is required",
         })}
@@ -161,7 +172,12 @@ const SignupForm: React.FC<{
         error={errors["confirmPassword"]}
       />
       <div className={styles["actions"]}>
-        <Button disabled={loading} type="submit" className="btn primary">
+        <Button
+          disabled={loading}
+          variant="primary"
+          type="submit"
+          className={styles.btn}
+        >
           Register
         </Button>
       </div>
@@ -176,13 +192,18 @@ const Register = () => {
   const [formState, setFormState] = useState<"otp" | "verify" | "signup">(
     "otp"
   );
+  const [userType, setUserType] = useState<"user" | "org">("user");
+
   const navigate = useNavigate();
 
   const signup = async (signupFormData: FieldValues) => {
     try {
       setError(null);
       setLoading(true);
-      const data = await signupApi(signupFormData as SignupFormData);
+      const data = await signupApi({
+        ...signupFormData,
+        role: userType,
+      } as SignupFormData);
       if (data?.id) {
         toast.success("Account created successfully. Please login.");
         navigate("/login");
@@ -264,6 +285,24 @@ const Register = () => {
       <Alert isOpen={!!error} onClose={() => setError(null)} severity="error">
         {error}
       </Alert>
+      <div className={styles.tabs}>
+        <button
+          onClick={() => setUserType("user")}
+          className={cx(styles.tab, {
+            [styles.active]: userType === "user",
+          })}
+        >
+          User
+        </button>
+        <button
+          onClick={() => setUserType("org")}
+          className={cx(styles.tab, {
+            [styles.active]: userType === "org",
+          })}
+        >
+          Organization
+        </button>
+      </div>
       {formState === "otp" ? (
         <OTPForm loading={loading} sendOtp={sendOtp} />
       ) : formState === "verify" ? (

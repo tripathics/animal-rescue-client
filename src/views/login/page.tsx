@@ -39,9 +39,6 @@ const Login = () => {
   useEffect(() => {
     if (loading || !user) return;
     if (!user.first_name) {
-      if (user.role.includes("admin")) {
-        return navigate("/admin");
-      }
       navigate("/profile");
     } else {
       const { from } = location.state || { from: { pathname: "/" } };
@@ -56,10 +53,10 @@ const Login = () => {
           <img
             className={styles["logo"]}
             src="/nitap-logo.svg"
-            alt="NIT AP Alumni"
+            alt="Animal Rescue Network"
           />
         </NavLink>
-        <h1>Sign in to NIT AP Alumni</h1>
+        <h1>Sign in to Animal Rescue Network</h1>
       </header>
       {location.state?.from && <Alert>Please login to continue</Alert>}
       <Alert isOpen={!!error} severity="error" onClose={() => setError(null)}>

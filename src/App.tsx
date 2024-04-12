@@ -39,8 +39,16 @@ const router = createBrowserRouter([
                 ],
               },
               {
+                path: "rescue",
+                element: <h1>TODO: Rescue</h1>,
+              },
+              {
+                path: "donate",
+                element: <h1>TODO: Donate</h1>,
+              },
+              {
                 path: "alumni-membership",
-                element: <Alumni />
+                element: <Alumni />,
               },
             ],
           },

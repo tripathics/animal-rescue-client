@@ -12,7 +12,7 @@ const readProfile = async (): Promise<
   try {
     const response = await axios.request({
       method: "GET",
-      url: "/api/users/profile",
+      url: "/api/users/u",
     });
     return response.data;
   } catch (error) {

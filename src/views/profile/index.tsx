@@ -10,32 +10,18 @@ import Experience from "./experience/page";
 
 import {
   User as UserIcon,
-  Suitcase as SuitcaseIcon,
-  Book as BookIcon,
   Settings as SettingsIcon,
   LogOut as LogOutIcon,
-  Lock,
 } from "iconoir-react";
+import cx from "classnames";
 
 const Profile = () => {
-  const { user, logout } = useUser();
+  const { logout } = useUser();
 
   const navigations = [
     {
       title: "Profile",
-      links: [
-        { name: "Personal Profile", path: "", Icon: UserIcon },
-        {
-          name: "Education",
-          path: "education",
-          Icon: BookIcon,
-        },
-        {
-          name: "Experience",
-          path: "experience",
-          Icon: SuitcaseIcon,
-        },
-      ],
+      links: [{ name: "Personal Profile", path: "", Icon: UserIcon }],
     },
     {
       title: "Account",
@@ -52,20 +38,8 @@ const Profile = () => {
 
   return (
     <>
-      <Header pageHeading={"Profile"} bgImage="/header-bg/2023-04-09.jpg">
-        <div className={styles.header}>
-          {user?.profile_locked ? (
-            <>
-              <Lock />
-              <p>
-                Profile is locked for editing until your membership application
-                is resolved.
-              </p>
-            </>
-          ) : (
-            <p>Manage and update your profile</p>
-          )}
-        </div>
+      <Header pageHeading={"Your Profile"}>
+        <p>Manage and update your profile</p>
       </Header>
       <div className="__page-content container">
         <DashboardLayout navigations={navigations}>
@@ -77,5 +51,4 @@ const Profile = () => {
 };
 
 export default Profile;
-// export { PersonalProfile, Education, Experience };
 export { PersonalProfile, Education, Experience };
