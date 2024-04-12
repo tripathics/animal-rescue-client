@@ -1,10 +1,9 @@
 import { createContext, useEffect } from "react";
 import useAuth from "../hooks/auth";
-import { UserContextType } from "../types/User.type";
-import eventEmitter from "@/config/eventEmitter.config";
+import eventEmitter from "../config/eventEmitter.config";
 import { toast } from "react-toastify";
 
-export const UserContext = createContext<UserContextType>({
+export const UserContext = createContext({
   user: null,
   admin: false,
   loading: false,
@@ -14,7 +13,7 @@ export const UserContext = createContext<UserContextType>({
   fetchUser: async () => {},
 });
 
-export const UserProvider= ({ children }) => {
+export const UserProvider = ({ children }) => {
   const {
     admin,
     checkAuth,
