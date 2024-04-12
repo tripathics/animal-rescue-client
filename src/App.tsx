@@ -9,14 +9,13 @@ import OrganisationGrid from "./views/organisation/OrganisationGrid";
 import { Home, About, Login, Register } from "./views";
 import DonationPage from "./views/donation/Page";
 import Profile, {
-  Education,
-  Experience,
+
   PersonalProfile,
 } from "./views/profile";
 import Admin, { Applications, Users } from "./views/admin";
 import Alumni from "./views/alumni";
 import ResetPassword from "./views/reset-password/page";
-
+import Organisation from "./views/organisation/page";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,6 +25,7 @@ const router = createBrowserRouter([
         children: [
           { path: "", element: <Home /> },
           { path: "about", element: <About /> },
+          { path: "organizations", element: <Organisation /> },
           {
             element: <PrivateRoutes />,
             children: [
@@ -34,8 +34,6 @@ const router = createBrowserRouter([
                 element: <Profile />,
                 children: [
                   { path: "", element: <PersonalProfile /> },
-                  { path: "education", element: <Education /> },
-                  { path: "experience", element: <Experience /> },
                   { path: "account", element: <h1>TODO: Account</h1> },
                 ],
               },

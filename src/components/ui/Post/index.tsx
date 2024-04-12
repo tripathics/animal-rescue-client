@@ -7,6 +7,9 @@ import useUser from "@/hooks/user";
 import Modal from "../Modal/Modal";
 import SchemaForm from "@/components/forms";
 import { Link } from "react-router-dom";
+import { FieldValues } from "react-hook-form";
+import createPost from "@/utils/api/createPost";
+import { toast } from "react-toastify";
 
 export const PictureCarousel: React.FC<{ pictures: string[] }> = ({
   pictures,
@@ -50,12 +53,13 @@ export const PictureCarousel: React.FC<{ pictures: string[] }> = ({
 export const Post: React.FC<{
   userName: string;
   description: string;
+  userAvatar?: string | null;
   pictures?: string[];
-}> = ({ userName, description, pictures }) => {
+}> = ({ userName, description, pictures, userAvatar }) => {
   return (
     <div className={styles.post}>
       <header className={styles.header}>
-        <Avatar size="2.2rem" />
+        <Avatar size="2.2rem" avatar={userAvatar} />
         <p className={styles.userName}>{userName}</p>
       </header>
       <main className={styles.main}>
@@ -69,6 +73,28 @@ export const Post: React.FC<{
 export const CreatePost: React.FC = () => {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
+  const handleCreatePost = async (data: FieldValues) => {
+    const formData = new FormData();
+    for (const key in data) {
+      if (key === "pictures") {
+        const file = data[key][0];
+        formData.append("pictures", file);
+      } else {
+        formData.append(key, data[key]);
+      }
+    }
+    console.log(formData.getAll("pictures"));
+
+    try {
+      const resData = await createPost(formData);
+      if (resData) {
+        toast.success(resData.message);
+      }
+    } catch (error) {
+      if (error instanceof Error) toast.error(error.message);
+    }
+  };
+
   return (
     <div className={styles.createPost}>
       <Button
@@ -78,7 +104,7 @@ export const CreatePost: React.FC = () => {
         }}
         className={styles.createPostBtn}
       >
-        <Plus fontSize={"2rem"} />
+        <Plus color="black" fontSize={"2rem"} />
       </Button>
       <p>Create a post</p>
 
@@ -98,13 +124,13 @@ export const CreatePost: React.FC = () => {
                   label: "Write your post",
                 },
                 {
-                  name: "post-type",
+                  name: "post_type",
                   type: "radio",
                   required: "Post type is required",
                   label: "Select post type",
                   options: [
-                    { label: "Post", value: "Post" },
-                    { label: "Donation", value: "donation" },
+                    { label: "post", value: "post" },
+                    { label: "donation", value: "donation" },
                   ],
                 },
                 {
@@ -115,9 +141,7 @@ export const CreatePost: React.FC = () => {
                   label: "Photos",
                 },
               ]}
-              onSubmit={(data) => {
-                console.log(data);
-              }}
+              onSubmit={handleCreatePost}
             />
           </div>
         </div>

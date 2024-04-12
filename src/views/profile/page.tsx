@@ -12,6 +12,7 @@ import EditAvatar from "@/components/ui/Avatar/EditAvatar";
 import styles from "@/components/layouts/dashboard/Dashboard.module.scss";
 import AvatarUpload from "@/components/forms/AvatarUpload";
 import personalDetailsFormSchema from "@/utils/formSchema/personalDetailsFormSchema";
+import orgDetailsFormSchema from "@/utils/formSchema/orgDetailsFormSchema";
 import { FieldValues } from "react-hook-form";
 import { PersonalDetailsType } from "@/types/Profile.type";
 import { toast } from "react-toastify";
@@ -25,10 +26,17 @@ const PersonalDetailsForm: React.FC<PersonalDetailsFormProps> = ({
   prefillData,
   onSubmit,
 }) => {
+  const { user } = useUser();
+  let formSchema = personalDetailsFormSchema;
+
+  if (user?.role.includes("org")) {
+    formSchema = orgDetailsFormSchema;
+  }
+
   return (
     <SchemaForm
       prefillData={prefillData}
-      schema={personalDetailsFormSchema}
+      schema={formSchema}
       onSubmit={onSubmit}
       actions={
         <Button type="submit" className="primary">
@@ -101,60 +109,42 @@ const PersonalDetails = () => {
     <>
       <section className={cx(styles.box, styles["basic-info-wrapper"])}>
         <div className={styles["actions"]}>
-          {user?.profile_locked ? (
-            <Button variant="default" disabled>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "0.25rem",
-                  alignItems: "center",
-                }}
-              >
-                <EditPencil />
-                Edit
-              </div>
-            </Button>
-          ) : (
-            <>
-              <Button
-                variant="default"
-                onClick={() => setIsProfileFormModalOpen(true)}
-              >
-                <div
-                  className={styles.editProfileBtn}
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "0.25rem",
-                    alignItems: "center",
-                  }}
-                >
-                  <EditPencil />
-                  Edit
-                </div>
-              </Button>
-              <Modal
-                isOpen={isProfileFormModalOpen}
-                modalTitle="Edit personal details"
-                setIsOpen={(val) => {
-                  setIsProfileFormModalOpen(val);
-                }}
-              >
-                <section className={styles.box}>
-                  <PersonalDetailsForm
-                    prefillData={
-                      {
-                        ...personalDetails,
-                        email: user?.email,
-                      } as FieldValues
-                    }
-                    onSubmit={updateProfile}
-                  />
-                </section>
-              </Modal>
-            </>
-          )}
+          <Button
+            variant="default"
+            onClick={() => setIsProfileFormModalOpen(true)}
+          >
+            <div
+              className={styles.editProfileBtn}
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "0.25rem",
+                alignItems: "center",
+              }}
+            >
+              <EditPencil />
+              Edit
+            </div>
+          </Button>
+          <Modal
+            isOpen={isProfileFormModalOpen}
+            modalTitle="Edit personal details"
+            setIsOpen={(val) => {
+              setIsProfileFormModalOpen(val);
+            }}
+          >
+            <section className={styles.box}>
+              <PersonalDetailsForm
+                prefillData={
+                  {
+                    ...personalDetails,
+                    email: user?.email,
+                  } as FieldValues
+                }
+                onSubmit={updateProfile}
+              />
+            </section>
+          </Modal>
         </div>
         <div className={styles["basic-info"]}>
           <div className={styles["avatar-container"]}>
@@ -227,7 +217,12 @@ const PersonalDetails = () => {
     </>
   ) : (
     <>
-      <Alert severity="info">Complete your profile</Alert>
+      <Alert severity="info">
+        {user &&
+          (user.role.includes("org")
+            ? "Enter your organization details"
+            : "Complete your profile")}
+      </Alert>
       <section className={styles.box}>
         <PersonalDetailsForm
           prefillData={

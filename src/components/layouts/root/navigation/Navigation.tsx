@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
   const userLinks: userLinksType[] = [
     { label: "Login", href: "/login" },
     { label: "Register", href: "/register" },
-    { label: "Profile", href: "/profile", rolesVislbleTo: ["user"] },
+    { label: "Profile", href: "/profile", rolesVislbleTo: ["user", "org"] },
     {
       label: "Logout",
       href: "/",
