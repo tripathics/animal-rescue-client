@@ -162,7 +162,7 @@ const SchemaForm: React.FC<SchemaFormProps> = ({
       {actions !== null ? (
         actions
       ) : (
-        <Button type="submit" className="primary">
+        <Button type="submit" variant="primary">
           Submit
         </Button>
       )}

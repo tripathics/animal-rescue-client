@@ -111,7 +111,7 @@ const Navbar: React.FC = () => {
                         <div className={styles["user-name-wrapper"]}>
                           {user.first_name ? (
                             <div className={styles["user-name"]}>
-                              {`${user.title} ${user.first_name} ${user.last_name}`}
+                              {`${user.first_name} ${user.last_name}`}
                             </div>
                           ) : (
                             <div className={styles["message"]}>

@@ -39,9 +39,6 @@ const Login = () => {
   useEffect(() => {
     if (loading || !user) return;
     if (!user.first_name) {
-      if (user.role.includes("admin")) {
-        return navigate("/admin");
-      }
       navigate("/profile");
     } else {
       const { from } = location.state || { from: { pathname: "/" } };

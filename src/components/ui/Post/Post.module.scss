@@ -70,6 +70,40 @@
   }
 }
 
+.rescue {
+  box-shadow: var(--box-bs);
+  padding: 1.5rem;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-items: center;
+  border-radius: 0.5rem;
+
+  p {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .rescueBtn {
+    display: flex;
+    padding: 8px;
+    border: solid 2px black;
+    border-radius: 30%;
+
+    &:active {
+      border-width: 2px;
+      border-radius: 50%;
+
+      &::after {
+        border-color: transparent;
+        border-width: 2px;
+        border-radius: 0.5rem;
+      }
+    }
+  }
+}
+
 .createPost {
   box-shadow: var(--box-bs);
   padding: 1.5rem;
@@ -89,6 +123,7 @@
     padding: 2px;
     border: solid 2px black;
     border-radius: 30%;
+    display: flex;
 
     &:active {
       border-width: 2px;

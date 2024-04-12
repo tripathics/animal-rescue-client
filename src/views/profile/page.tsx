@@ -1,4 +1,5 @@
-import SchemaForm, { Button } from "@/components/forms";
+import SchemaForm from "@/components/forms";
+import Button from "@/components/ui/Elements/Button";
 import cx from "classnames";
 import { EditPencil } from "iconoir-react";
 import Modal from "@/components/ui/Modal/Modal";
@@ -15,7 +16,6 @@ import { FieldValues } from "react-hook-form";
 import { PersonalDetailsType } from "@/types/Profile.type";
 import { toast } from "react-toastify";
 import Alert from "@/components/ui/Alert/Alert";
-import { getDate } from "@/utils/helper";
 
 interface PersonalDetailsFormProps {
   prefillData: FieldValues;
@@ -97,20 +97,42 @@ const PersonalDetails = () => {
     };
   }, [fetchProfile, fetchUser]);
 
-  return personalDetails?.registration_no ? (
+  return personalDetails?.first_name ? (
     <>
       <section className={cx(styles.box, styles["basic-info-wrapper"])}>
         <div className={styles["actions"]}>
           {user?.profile_locked ? (
-            <Button disabled>
-              <EditPencil />
-              Edit
+            <Button variant="default" disabled>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "0.25rem",
+                  alignItems: "center",
+                }}
+              >
+                <EditPencil />
+                Edit
+              </div>
             </Button>
           ) : (
             <>
-              <Button onClick={() => setIsProfileFormModalOpen(true)}>
-                <EditPencil />
-                Edit
+              <Button
+                variant="default"
+                onClick={() => setIsProfileFormModalOpen(true)}
+              >
+                <div
+                  className={styles.editProfileBtn}
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "0.25rem",
+                    alignItems: "center",
+                  }}
+                >
+                  <EditPencil />
+                  Edit
+                </div>
               </Button>
               <Modal
                 isOpen={isProfileFormModalOpen}
@@ -137,6 +159,7 @@ const PersonalDetails = () => {
         <div className={styles["basic-info"]}>
           <div className={styles["avatar-container"]}>
             <EditAvatar
+              size="120px"
               avatar={personalDetails.avatar}
               className={styles["avatar-crop"]}
             />
@@ -163,17 +186,9 @@ const PersonalDetails = () => {
           </div>
           <div className={styles["basic-info-content"]}>
             <h2 className={styles["title"]}>
-              {personalDetails.title} {personalDetails.first_name}{" "}
-              {personalDetails.last_name}
+              {personalDetails.first_name} {personalDetails.last_name}
             </h2>
             <div className={styles["subtitle"]}>
-              <p>Class of 2020</p>
-              <p className={styles["mono"]}>
-                <span title="Registration no.">
-                  {personalDetails.registration_no}
-                </span>
-                |<span title="Roll no.">{personalDetails.roll_no}</span>
-              </p>
               <p>
                 <span title="Email">{user?.email}</span>
               </p>
@@ -181,46 +196,6 @@ const PersonalDetails = () => {
           </div>
         </div>
       </section>
-
-      <section className={styles.box}>
-        <h3 className={styles["title"]}>Personal details</h3>
-        <div className={styles["box-subtitle"]}>
-          <p>These details are used for account safety purposes.</p>
-        </div>
-        <div className={styles["box-table"]}>
-          <div className={styles["box-row"]}>
-            <p className={cx(styles.col, styles["label"])}>Date of Birth</p>
-            <p className={cx(styles.col, styles["value"])}>
-              {getDate(personalDetails.dob)}
-            </p>
-          </div>
-          <div className={styles["box-row"]}>
-            <p className={cx(styles.col, styles["label"])}>Sex</p>
-            <p className={cx(styles.col, styles["value"])}>
-              {personalDetails.sex}
-            </p>
-          </div>
-          <div className={styles["box-row"]}>
-            <p className={cx(styles.col, styles["label"])}>Category</p>
-            <p className={cx(styles.col, styles["value"])}>
-              {personalDetails.category}
-            </p>
-          </div>
-          <div className={styles["box-row"]}>
-            <p className={cx(styles.col, styles["label"])}>Nationality</p>
-            <p className={cx(styles.col, styles["value"])}>
-              {personalDetails.nationality}
-            </p>
-          </div>
-          <div className={styles["box-row"]}>
-            <p className={cx(styles.col, styles["label"])}>Religion</p>
-            <p className={cx(styles.col, styles["value"])}>
-              {personalDetails.religion}
-            </p>
-          </div>
-        </div>
-      </section>
-
       <section className={styles.box}>
         <h3 className={styles.title}>Contact details</h3>
         <div className={styles["box-table"]}>
@@ -244,42 +219,8 @@ const PersonalDetails = () => {
             </div>
             <div className={styles["col"]}>
               <p className={styles["value"]}>{user?.email}</p>
-              <p className={styles["value"]}>{personalDetails.alt_email}</p>
               <p className={styles["value"]}>{personalDetails.phone}</p>
-              <p className={styles["value"]}>{personalDetails.alt_phone}</p>
             </div>
-          </div>
-        </div>
-
-        <div className={styles["box-table"]}>
-          <div className={cx(styles["box-row"], styles.header)}>
-            <h4 className={cx(styles["col"], styles["box-col-header"])}>
-              Your Social Profiles
-            </h4>
-          </div>
-          <div className={styles["box-row"]}>
-            <p className={cx(styles.col, styles["label"])}>LinkedIn</p>
-            <p className={cx(styles.col, styles["value"])}>
-              {personalDetails.linkedin ? (
-                <a href={personalDetails.linkedin} target="_blank">
-                  {personalDetails.linkedin}
-                </a>
-              ) : (
-                "N/A"
-              )}
-            </p>
-          </div>
-          <div className={styles["box-row"]}>
-            <p className={cx(styles.col, styles["label"])}>GitHub</p>
-            <p className={cx(styles.col, styles["value"])}>
-              {personalDetails.github ? (
-                <a href={personalDetails.github} target="_blank">
-                  {personalDetails.github}
-                </a>
-              ) : (
-                "N/A"
-              )}
-            </p>
           </div>
         </div>
       </section>
