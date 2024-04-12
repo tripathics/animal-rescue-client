@@ -33,7 +33,7 @@ const OTPForm: React.FC<{
       <TextField
         type="text"
         required
-        label="Personal Email"
+        label="Email"
         {...register("email", {
           required: "Email is required",
         })}
@@ -81,7 +81,7 @@ const VerifyForm: React.FC<{
         type="text"
         required
         disabled
-        label="Personal Email"
+        label="Email"
         {...register("email", {
           required: "Email is required",
         })}
@@ -141,7 +141,7 @@ const SignupForm: React.FC<{
         type="text"
         required
         disabled
-        label="Personal Email"
+        label="Email"
         {...register("email", {
           required: "Email is required",
         })}

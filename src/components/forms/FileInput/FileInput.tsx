@@ -47,9 +47,11 @@ const FileInput: React.FC<FileInputProps> = ({
 
   const checkFileType = (values: File[]) => {
     if (allowedFormats) {
-      for (const file of values) {
-        if (!allowedFormats.includes(file.type)) {
-          return "Inavalid file format";
+      if (values) {
+        for (const file of values) {
+          if (!allowedFormats.includes(file.type)) {
+            return "Inavalid file format";
+          }
         }
       }
     }
@@ -57,7 +59,6 @@ const FileInput: React.FC<FileInputProps> = ({
   };
 
   const checkFileSize = (values: File[]) => {
-    console.log("checking file size");
     if (maxFileSize) {
       for (const file of values) {
         if (file.size > maxFileSize) {

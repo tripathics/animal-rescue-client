@@ -1,18 +1,12 @@
-// import styles from "../../layouts/dashboard/Dashboard.module.scss";
 import { useState } from "react";
 import styles from "./Post.module.scss";
 import Avatar from "../Avatar/Avatar";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Plus,
-  PlusCircle,
-  PlusCircleSolid,
-} from "iconoir-react";
+import { ArrowLeft, ArrowRight, Heart, Plus } from "iconoir-react";
 import Button from "../Elements/Button";
 import useUser from "@/hooks/user";
 import Modal from "../Modal/Modal";
 import SchemaForm from "@/components/forms";
+import { Link } from "react-router-dom";
 
 export const PictureCarousel: React.FC<{ pictures: string[] }> = ({
   pictures,
@@ -100,13 +94,13 @@ export const CreatePost: React.FC = () => {
                 {
                   name: "description",
                   type: "textarea",
-                  required: true,
+                  required: "Description is required",
                   label: "Write your post",
                 },
                 {
                   name: "post-type",
                   type: "radio",
-                  required: true,
+                  required: "Post type is required",
                   label: "Select post type",
                   options: [
                     { label: "Post", value: "Post" },
@@ -114,7 +108,7 @@ export const CreatePost: React.FC = () => {
                   ],
                 },
                 {
-                  name: "photos",
+                  name: "pictures",
                   type: "file",
                   multiple: true,
                   allowedFormats: ["image/png", "image/jpeg", "image/webp"],
@@ -132,6 +126,25 @@ export const CreatePost: React.FC = () => {
   );
 };
 
+export const Rescue: React.FC = () => {
+  return (
+    <div className={styles.rescue}>
+      <Link to="/rescue">
+        <Button
+          variant="secondary"
+          onClick={() => {
+            console.log("Rescue");
+          }}
+          className={styles.rescueBtn}
+        >
+          <Heart color="black" strokeWidth="1.2" fontSize={"1.8rem"} />
+        </Button>
+      </Link>
+      <p>Rescue</p>
+    </div>
+  );
+};
+
 export const PostsContainer: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
@@ -140,7 +153,7 @@ export const PostsContainer: React.FC<{ children: React.ReactNode }> = ({
   return (
     <div className={styles.postsContainer}>
       <div className={styles.sidebar}>
-        <CreatePost />
+        {user?.role.includes("org") ? <CreatePost /> : <Rescue />}
       </div>
       <div className={styles.posts}>{children}</div>
     </div>

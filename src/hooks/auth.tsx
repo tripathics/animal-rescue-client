@@ -8,12 +8,12 @@ import { toast } from "react-toastify";
 
 const useAuth = () => {
   const [user, setUser] = useState<UserType | null>(null);
-  const [admin, setAdmin] = useState<boolean>(false);
+  const [isOrg, setOrg] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
   const clearUser = () => {
     setUser(null);
-    setAdmin(false);
+    setOrg(false);
   };
 
   const fetchUser = useCallback(async () => {
@@ -24,7 +24,7 @@ const useAuth = () => {
         return;
       }
       setUser(response.user);
-      setAdmin(response.user.role.includes("admin"));
+      setOrg(response.user.role.includes("org"));
     } catch (error) {
       if (typeof error === "string" && error !== "Token not found") {
         toast.error("Session expired");
@@ -39,7 +39,7 @@ const useAuth = () => {
       const data = await loginApi(loginFormData);
       if (data?.user) {
         setUser(data.user);
-        setAdmin(data.user.role.includes("admin"));
+        setOrg(data.user.role.includes("org"));
         const firstName = data.user.first_name;
         toast.dismiss();
         toast.success(
@@ -84,7 +84,7 @@ const useAuth = () => {
     } catch (error) {
       console.error(error);
       setUser(null);
-      setAdmin(false);
+      setOrg(false);
     } finally {
       setTimeout(() => {
         setLoading(false);
@@ -94,7 +94,7 @@ const useAuth = () => {
 
   return {
     user,
-    admin,
+    admin: isOrg,
     loading,
     login,
     logout,

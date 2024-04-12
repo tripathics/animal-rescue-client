@@ -7,11 +7,9 @@ export interface UserType {
   id: string;
   email: string;
   role: UserRole[];
-  title: TitleType;
   first_name: string;
   last_name?: string | null;
   avatar: string;
-  profile_locked: boolean | null;
 }
 
 export interface UserContextType {
