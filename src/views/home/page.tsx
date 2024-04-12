@@ -3,6 +3,9 @@ import PageHeader from "../../components/layouts/PageHeader/PageHeader";
 import styles from "./Home.module.scss";
 import cx from "classnames";
 import { Post, PostsContainer } from "@/components/ui/Post";
+import { useEffect, useState } from "react";
+import { PostType } from "@/types/Post.type";
+import getPosts from "@/utils/api/getPosts";
 
 // dummy list of organizations that rescue animals
 const dummyOrganizations = [
@@ -19,7 +22,6 @@ const dummyOrganizations = [
     name: "Purucat House",
     url: "https://example.com",
     location: "tamilnadu, india",
-
   },
   {
     id: 3,
@@ -31,6 +33,18 @@ const dummyOrganizations = [
 ];
 
 const Home: React.FC = () => {
+  const [posts, setPosts] = useState<PostType[]>([]);
+
+  const fetchPosts = async () => {
+    const posts = await getPosts();
+    if (posts) {
+      setPosts(posts.posts);
+    }
+  };
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
   return (
     <>
       <PageHeader bgImage="hero.png">
@@ -52,7 +66,6 @@ const Home: React.FC = () => {
             <div>
               <h3>Find help nearby </h3>
               <div className={styles.sideOrg}>
-
                 <ul>
                   {dummyOrganizations.map((org) => (
                     <li key={org.id}>
@@ -70,6 +83,15 @@ const Home: React.FC = () => {
         >
           <div>
             <PostsContainer>
+              {posts.map((post) => (
+                <Post
+                  key={post.id}
+                  description={post.description}
+                  userName={post.first_name}
+                  pictures={post.pictures}
+                  userAvatar={post.avatar}
+                />
+              ))}
               <Post
                 description="hello world"
                 userName="Alice"
@@ -79,7 +101,8 @@ const Home: React.FC = () => {
                   "https://via.placeholder.com/300",
                   "https://via.placeholder.com/500",
                 ]}
-              />  <Post
+              />{" "}
+              <Post
                 description="today my cat had an acccdent "
                 userName="perna"
                 pictures={[
@@ -108,7 +131,8 @@ const Home: React.FC = () => {
                   "https://via.placeholder.com/300",
                   "https://via.placeholder.com/500",
                 ]}
-              />  <Post
+              />{" "}
+              <Post
                 description="today my cat had an acccdent "
                 userName="perna"
                 pictures={[
@@ -130,7 +154,6 @@ const Home: React.FC = () => {
               />
             </PostsContainer>
           </div>
-
         </TwoColLayout>
       </div>
     </>

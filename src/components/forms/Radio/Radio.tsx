@@ -39,7 +39,7 @@ const Radio: React.ForwardRefExoticComponent<
                     onBlur={onBlur}
                     value={value}
                   />
-                  <label className={styles["radio-label"]} htmlFor={value}>
+                  <label className={styles["radio-label"]} htmlFor={name}>
                     {label}
                   </label>
                 </div>
