@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import axios from "../../config/axios.config";
+import axiosInstance from "../../config/axios.config";
 
 const createPost = async (
   data: FormData
@@ -11,10 +11,10 @@ const createPost = async (
   | undefined
 > => {
   try {
-    const response = await axios.request({
-      method: "POST",
-      url: "/api/posts/create",
-      data: data,
+    const response = await axiosInstance.post("/api/posts/create", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
     return response.data;
   } catch (error) {

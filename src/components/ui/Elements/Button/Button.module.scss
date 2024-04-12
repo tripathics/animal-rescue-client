@@ -30,6 +30,7 @@
     content: "";
     border: solid 1px transparent;
     transition: all 0.1s ease-out;
+    border-radius: inherit;
   }
 
   &:hover {

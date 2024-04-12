@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
 import createPost from "@/utils/api/createPost";
 import { toast } from "react-toastify";
+import eventEmitter from "@/config/eventEmitter.config";
 
 export const PictureCarousel: React.FC<{ pictures: string[] }> = ({
   pictures,
@@ -33,19 +34,25 @@ export const PictureCarousel: React.FC<{ pictures: string[] }> = ({
       {pictures.map((picture, index) => (
         <img
           key={index}
-          src={picture}
+          src={`${
+            import.meta.env.VITE_SERVER_BASE_URL
+          }/media/post-media/${picture}`}
           alt="carousel"
           style={{
             display: index === activeIndex ? "block" : "none",
           }}
         />
       ))}
-      <Button className={styles.scrollBtn} onClick={handlePrev}>
-        <ArrowLeft />
-      </Button>
-      <Button className={styles.scrollBtn} onClick={handleNext}>
-        <ArrowRight />
-      </Button>
+      {pictures.length > 1 && (
+        <>
+          <Button className={styles.scrollBtn} onClick={handlePrev}>
+            <ArrowLeft />
+          </Button>
+          <Button className={styles.scrollBtn} onClick={handleNext}>
+            <ArrowRight />
+          </Button>
+        </>
+      )}
     </div>
   );
 };
@@ -64,7 +71,7 @@ export const Post: React.FC<{
       </header>
       <main className={styles.main}>
         <p className={styles.description}>{description}</p>
-        {pictures && <PictureCarousel pictures={pictures} />}
+        {!!pictures?.length && <PictureCarousel pictures={pictures} />}
       </main>
     </div>
   );
@@ -72,26 +79,33 @@ export const Post: React.FC<{
 
 export const CreatePost: React.FC = () => {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleCreatePost = async (data: FieldValues) => {
     const formData = new FormData();
     for (const key in data) {
-      if (key === "pictures") {
-        const file = data[key][0];
-        formData.append("pictures", file);
+      if (key === "pictures" && data[key]?.length > 0) {
+        const files = data[key];
+        for (let i = 0; i < files.length; i++) {
+          formData.append("pictures", files[i]);
+        }
       } else {
         formData.append(key, data[key]);
       }
     }
-    console.log(formData.getAll("pictures"));
 
     try {
+      setLoading(true);
       const resData = await createPost(formData);
       if (resData) {
         toast.success(resData.message);
+        eventEmitter.emit("postCreated");
+        setIsPostModalOpen(false);
       }
     } catch (error) {
       if (error instanceof Error) toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -142,6 +156,7 @@ export const CreatePost: React.FC = () => {
                 },
               ]}
               onSubmit={handleCreatePost}
+              loading={loading}
             />
           </div>
         </div>

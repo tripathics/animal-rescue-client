@@ -4,14 +4,11 @@ import { UserProvider } from "./contexts/user";
 import RootLayout from "./components/layouts/root";
 import AuthLayout from "./components/layouts/auth";
 import PrivateRoutes from "./components/routing/PrivateRoutes/PrivateRoutes";
-import Organisation from "./views/organisation/organisation";
+// import Organisation from "./views/organisation/organisation";
 import OrganisationGrid from "./views/organisation/OrganisationGrid";
 import { Home, About, Login, Register } from "./views";
 import DonationPage from "./views/donation/Page";
-import Profile, {
-
-  PersonalProfile,
-} from "./views/profile";
+import Profile, { PersonalProfile } from "./views/profile";
 import Admin, { Applications, Users } from "./views/admin";
 import Alumni from "./views/alumni";
 import ResetPassword from "./views/reset-password/page";
@@ -51,22 +48,22 @@ const router = createBrowserRouter([
               },
             ],
           },
-          { 
-            children :[
+          {
+            children: [
               {
-                path: "organisation", 
-                element : <Organisation />,
+                path: "organisation",
+                element: <Organisation />,
                 children: [
                   { path: "list", element: <OrganisationGrid /> },
                   { path: "add", element: <h1>TODO: Add Organisation</h1> },
                   { path: "edit", element: <h1>TODO: Edit Organisation</h1> },
-                ]
-              }
-            ]
+                ],
+              },
+            ],
           },
           {
-            path:"orglist",
-            element: <OrganisationGrid />
+            path: "orglist",
+            element: <OrganisationGrid />,
           },
 
           {
