@@ -1,10 +1,12 @@
 import { AxiosError } from "axios";
 import axios from "../../config/axios.config";
+import { UserRole } from "@/types/User.type";
 
 export interface SignupFormData {
   email: string;
   password: string;
   confirmPassword: string;
+  role: UserRole;
 }
 const signup = async (
   data: SignupFormData

@@ -56,10 +56,10 @@ const Login = () => {
           <img
             className={styles["logo"]}
             src="/nitap-logo.svg"
-            alt="NIT AP Alumni"
+            alt="Animal Rescue Network"
           />
         </NavLink>
-        <h1>Sign in to NIT AP Alumni</h1>
+        <h1>Sign in to Animal Rescue Network</h1>
       </header>
       {location.state?.from && <Alert>Please login to continue</Alert>}
       <Alert isOpen={!!error} severity="error" onClose={() => setError(null)}>

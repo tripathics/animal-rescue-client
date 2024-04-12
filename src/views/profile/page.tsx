@@ -286,9 +286,7 @@ const PersonalDetails = () => {
     </>
   ) : (
     <>
-      <Alert severity="info">
-        Fill in your personal details to complete creating your alumni profile
-      </Alert>
+      <Alert severity="info">Complete your profile</Alert>
       <section className={styles.box}>
         <PersonalDetailsForm
           prefillData={

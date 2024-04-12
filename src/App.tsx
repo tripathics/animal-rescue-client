@@ -38,7 +38,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "alumni-membership",
-                element: <Alumni />
+                element: <Alumni />,
               },
             ],
           },
