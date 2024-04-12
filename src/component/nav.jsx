@@ -1,16 +1,23 @@
-import React from "react";
+// Navbar.js
+import React from 'react';
+import Logo from './Logo.jsx'; // Import the Logo component
 
-const Nav = () => {
+class Navbar extends React.Component {
+  render() {
     return (
-        <nav>
-            <ul>
-                <li> <img alt="logo"> </img></li>
-                <li>Home</li>
-                <li>About</li>
-                <li>Contact</li>
-            </ul>
-        </nav>
-    )
+      <nav>
+        <div className="logo-container">
+          <Logo />
+        </div>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    );
+  }
 }
 
-export default Nav;
+export default Navbar;
