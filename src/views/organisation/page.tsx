@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PageHeader from "../../components/layouts/PageHeader/PageHeader";
-import styles from "./organisation.module.scss";
+import styles from "./organisation-page.module.scss";
 import cx from "classnames";
 import getOrganizations from "@/utils/api/getOrganizations";
 import { toast } from "react-toastify";
